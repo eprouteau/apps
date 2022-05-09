@@ -1,0 +1,38 @@
+{
+  "js": ["js/filter.js", "js/jquery.easyDrag.min.js"],
+  "css": "css/filter.css",
+  "html": "filter.html",
+  "target": "page-content-wrapper",
+  "options": {
+    "title": "filtrer",
+    "open": true,
+    "zoomOnFeatures": true,
+    "layers": [{
+      "layerId": "boucle",
+      "filter": [{
+          "attribut": "secteur",
+          "type": "combobox",
+          "label": "Secteur"
+        },
+        {
+          "attribut": "classes_den_pos",
+          "type": "button",
+          "label": "Dénivelé",
+          "updateOnChange": true
+        },
+        {
+          "attribut": "classes_km",
+          "type": "button",
+          "label": "Kilomètres",
+          "updateOnChange": true
+        },
+        {
+          "attribut": "classes_foret",
+          "type": "button",
+          "label": "Nature de baignade",
+          "updateOnChange": true
+        }
+      ]
+    }]
+  }
+}

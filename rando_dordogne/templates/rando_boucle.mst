@@ -1,0 +1,186 @@
+{{#features}}
+<li class="item">
+	<div class="ligne">
+		<div class="col-xs-12">
+			<center><h3 class="title-feature">{{name}}</h3></center>
+		</div>
+	</div>
+	<div class="ligne">
+		<div class="col-xs-12">
+				<center><h4>Secteur {{secteur}}</h4></center>
+		</div>
+	</div>
+	<div class="ligne">
+		<div class="col-xs-12">
+			<h4 class="sub-title-feature"><i class="fas fa-info-circle"></i> Informations</h4>
+		</div>
+	</div>
+	<div class="ligne">
+		<div class="col-xs-3 text-center"><img src="apps/rando_dordogne/img/logo/route-loop.png" alt="Type" height="20"> {{type}}</div>
+		<div class="col-xs-3 text-center"><img src="apps/rando_dordogne/img/logo/length.png" alt="Distance" height="20"> {{longueur}} km</div>
+		<div class="col-xs-3 text-center"><img src="apps/rando_dordogne/img/logo/ascent.png" alt="dénivelé positif" height="20"> {{ascent}} m</div>
+		<div class="col-xs-3 text-center"><img src="apps/rando_dordogne/img/logo/ascent.png" alt="dénivelé positif" height="20"> {{descent}} m</div>
+	</div>
+	<div class="ligne">
+		<div class="col-xs-3 text-center"><img src="apps/rando_dordogne/img/logo/foret.png" alt="Type" height="20"> {{pourcentage_foret}} %</div>
+	</div>
+	<div class="ligne">
+		<div class="col-xs-12">
+			<h4 class="sub-title-feature"><i class="fas fa-car-alt"></i> Accès</h4>
+		</div>
+	</div>
+	<div class="ligne">
+		<div class="col-xs-12">
+			<span style="font-family:'roboto_bold'"> Coordonnées GPS (Départ) : </span>{{coordonnees_depart}}<br/>
+		</div>
+	</div>
+	<div class="ligne">
+		<div class="col-xs-12">
+			<span style="font-family:'roboto_bold'"> Commune de départ :</span>Télécharger<br/>
+		</div>
+	</div>
+	<div class="ligne">
+		<div class="col-xs-12">
+			<h4 class="sub-title-feature"><i class="fas fa-map-marked-alt"></i> Ressources</h4>
+		</div>
+	</div>
+	<div class="contenu">
+		<div class="col-xs-6 text-center">
+			<a href="http://emeric-prouteau.alwaysdata.net/gis/apps/rando_dordogne/data/gpx/{{idrando}}.zip"><img src="apps/rando_dordogne/img/logo/download.png" alt="GPX" height="30"> Trâce GPX</a>
+		</div>
+		<div class="col-xs-6 text-center">
+			<img src="apps/rando_dordogne/img/logo/map.png" alt="fiche rando" height="30"> Fiche rando
+		</div>
+	</div>
+	<div class="ligne">
+		<div class="col-xs-12">
+			<h4 class="sub-title-feature"><i class="fas fa-chart-area"></i> Profil altimétrique</h4>
+		</div>
+	</div>
+	<div class="ligne">
+		<div class="col-xs-12">
+			<canvas id="chart{{idrando}}"></canvas>
+		</div>
+	</div>
+	</li>
+{{/features}}
+<style>
+	.ligne{
+		vertical-align:middle;
+	}
+	.text-center{
+		text-align:center;
+		margin-top:10px;
+	}
+	.title-feature {
+		color: #52A53E;
+		font-family:"roboto_bold";
+		font-size:23px;
+		margin-bottom:1%;
+		line-height:1;
+	}
+	.sub-title-feature {
+		color: #032E46;
+		font-family:"roboto_bold";
+		font-size:20px;
+		margin-bottom:1%;
+		line-height:1;
+		background-color:#91C374;
+		padding-top:5px;
+		padding-bottom:5px;
+		padding-left:10px;
+		color:white;
+    	vertical-align:middle; 
+    	display:table;
+    	width:100%;
+	}
+	.text-feature{
+		font-family:"roboto_regular";
+		color:#555;
+		font-size:13px;
+		margin-top:10%;
+	}
+	.sub-title{
+		color: #032E46;
+		font-family:"roboto_bold";
+	}
+	#tableinformations {
+		margin-bottom:15px;
+	}
+	#tableinformations img{
+		height:20px;
+	}
+	#tableinformations td{
+		font-size:16px;
+		font-family:"roboto_regular";
+	}
+	#tableinformations .imginfos{
+		display:block;
+		margin-left:15px;
+		margin-right:5px;
+	}
+</style>
+<script>
+var rando = [];//création d'un tableau des plages (pour gérer plusieurs plages au clic) vide
+
+{{#features}}
+	rando.push('{{idrando}}'); //on rempli le tableau
+{{/features}}
+
+rando.forEach(function(item){//on boucle sur le tableau
+	console.log(item);
+	$.getJSON("apps/rando_dordogne/data/json_profil/"+item+".json", function (json) {
+		
+	var labels = json.map(function(e) {
+	return e.dist;
+	});
+	var data = json.map(function(e) {
+	return e.ele;
+	});
+	var ctx = document.getElementById("chart" + item);
+	var config = {
+	type: 'line',
+	data: {
+		labels: labels,
+		datasets: [{
+		label: 'Altitude',
+		data: data,
+		backgroundColor: 'rgba(0, 119, 204, 0.3)',
+		pointRadius: 0,
+		}]
+	},
+	options : {
+		scales: {
+			xAxes: [{
+				gridLines: {
+					display:false
+				},
+				ticks:{
+					autoSkip: true,
+					maxRotation:0,
+					maxTicksLimit:3
+				}
+			}],
+			yAxes: [{
+				ticks: {
+					min: 0,
+					max: 400,
+					stepsize: 50
+				},
+				gridLines: {
+					display:false
+				}   
+			}]
+		},
+		elements: {
+					line: {
+						tension: 0.6
+					}
+		},
+	},
+	};
+
+	var chart = new Chart(ctx, config);
+	});
+});
+</script>

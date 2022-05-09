@@ -1,0 +1,32 @@
+{
+  "js": ["js/filter.js"],
+  "css": "css/filter.css",
+  "html": "filter.html",
+  "target": "page-content-wrapper",
+  "options": {
+    "title": "filtrer",
+    "open": true,
+    "zoomOnFeatures": true,
+    "layers": [{
+      "layerId": "boucle",
+      "filter": [{
+          "attribut": "secteur",
+          "type": "combobox",
+          "label": "Grand térritoire"
+        },
+        {
+          "attribut": "classes_km",
+          "type": "button",
+          "label": "Service",
+          "updateOnChange": true
+        },
+        {
+          "attribut": "classes_den_pos",
+          "type": "button",
+          "label": "Service",
+          "updateOnChange": true
+        }
+      ]
+    }]
+  }
+}

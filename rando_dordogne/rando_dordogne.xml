@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application title="Randonnées en Dordogne" mouseposition="false" logo="" help="apps/rando_dordogne/infos.html" measuretools="true" exportpng="true" style="css/themes/crna.css" togglealllayersfromtheme="true"/>
+    <mapoptions maxzoom="19" projection="EPSG:3857" center="84203,5641683" zoom="9" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+   	<baselayers style="gallery">
+        <baselayer  type="OSM" id="osm1" label="OpenStreetMap" title="OpenStreetMap" thumbgallery="img/basemap/osm.png" 
+			url="http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
+			attribution="Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="true"/>
+    </baselayers>   
+    <proxy url=""/>
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>
+    <searchparameters bbox="false" localities="false" features="true"/>  
+
+    <themes mini="true">
+        <theme name="Panneaux"  collapsed="true" id="panneaux" icon="fas fa-map-signs">
+            <layer id="directionnel"
+                name="Panneaux directionnels"
+                type="customlayer"
+                vectorlegend="true"
+                url="apps/rando_dordogne/customlayers/directionnel.js"
+                queryable="true"
+                fields="nom"
+                aliases="Nom"
+                visible="false"                
+                attribution="ep">
+                <template url="apps/rando_dordogne/templates/rando_boucle.mst"></template>
+            </layer>
+            <layer id="departrando"
+                name="Départ des randonnées"
+                type="customlayer"
+                vectorlegend="true"
+                url="apps/rando_dordogne/customlayers/departrando.js"
+                fields="nom"
+                aliases="Nom"
+                visible="false"               
+                attribution="ep">
+                <template url="apps/rando_dordogne/templates/rando_boucle.mst"></template>
+            </layer>
+            <layer id="patrimoineculturel"
+                name="Patrimoine culturel (SIRTAQUI)"
+                type="customlayer"
+                vectorlegend="true"
+                url="apps/rando_dordogne/customlayers/pat_culturel.js"
+                fields="NOMOFFRE"
+                aliases="Nom"
+                visible="false"
+                queryable="true"  
+                tooltip="true"
+                tooltipenable="true"
+                tooltipcontent="{{NOMOFFRE}}"              
+                attribution="ep">
+            </layer>
+		</theme> 
+        <theme name="A Pied"  collapsed="true" id="habitant" icon="fas fa-hiking">
+            <layer id="boucle"
+                name="Boucles balisées"
+                type="customlayer"
+                vectorlegend="true"
+                url="apps/rando_dordogne/customlayers/boucle.js"
+                queryable="true"
+                fields="nom"
+                aliases="Nom"
+                visible="true"
+                infopanel="right-panel"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="name"
+                fusesearchresult="{{name}}"
+                tooltip="false"
+                tooltipenable="true"
+                tooltipcontent=""               
+                attribution="ep">
+                <template url="apps/rando_dordogne/templates/rando_boucle.mst"></template>
+            </layer>
+            <layer id="liaison"
+                name="Liaisons balisées"
+                type="customlayer"
+                vectorlegend="true"
+                url="apps/rando_dordogne/customlayers/liaison.js"
+                fields="nom"
+                aliases="Nom"
+                visible="true"
+                tooltip="false"
+                tooltipenable="false"
+                tooltipcontent=""               
+                attribution="ep">
+                <template url="apps/rando_dordogne/templates/rando_boucle.mst"></template>
+            </layer>
+	</theme>
+	<theme name="En vélo"  collapsed="true" id="velo" icon="fas fa-bicycle">
+	    <layer id="cyclo"
+                name="Cyclo"
+                type="customlayer"
+                vectorlegend="true"
+                url="apps/rando_dordogne/customlayers/cyclo.js"
+                queryable="true"
+                fields="nom"
+                aliases="Nom"
+                visible="true"
+                infopanel="right-panel"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="name"
+                fusesearchresult="{{name}}"
+                tooltip="false"
+                tooltipenable="true"
+                tooltipcontent=""               
+                attribution="ep">
+                <template url="apps/rando_dordogne/templates/rando_boucle.mst"></template>
+            </layer>
+	</theme> 
+    </themes>
+    <extensions>
+          <extension type="component" id="chartjs" path="apps/common/addon"/>  
+          <extension type="component" id="styleinfo" path="apps/rando_dordogne/addons"/></extensions>
+          <extension type="component" id="filter" path="apps/rando_dordogne/addons" />
+</config>

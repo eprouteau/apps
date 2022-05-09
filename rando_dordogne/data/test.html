@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr-fr" lang="fr-fr" dir="ltr" >
+<head>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    dede
+    <script>
+        $.getJSON("test.json", function (json) {
+            $.each(json, function(k,v) {
+                console.log(v.poi_type);
+                $( "#result" ).append( v.poi_type + '<br><br>');             
+            });
+        })
+        .fail(function( jqxhr, textStatus, error ) {
+        var err = textStatus + ", " + error;
+        console.log( "Request Failed: " + err );
+        });
+
+    </script>
+    <div id="result"></div>
+</body>
+</html>
